@@ -77,12 +77,12 @@ module Allpay
         PlatformID: platform
       }
       params.delete_if{ |k, v| v.nil? }
-      res = request '/Cashier/QueryTradeInfo', params
+      res = request '/Cashier/QueryTradeInfo/V2', params
       Hash[res.body.split('&').map!{|i| i.split('=')}]
     end
 
     def query_period_credit_card_trade_info merchant_trade_number
-      res = request '/Cashier/QueryPeriodCreditCardTradeInfo',
+      res = request '/Cashier/QueryCreditCardPeriodInfo',
               MerchantTradeNo: merchant_trade_number,
               TimeStamp: Time.now.to_i
       JSON.parse(res.body)
