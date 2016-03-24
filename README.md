@@ -31,16 +31,16 @@ test_client.request '/Cashier/QueryTradeInfo',
 
 歐付寶共有 5 個 API：
 
-- /Cashier/AioCheckOut
-- /Cashier/QueryTradeInfo
-- /Cashier/QueryPeriodCreditCardTradeInfo
+- /Cashier/AioCheckOut/V2
+- /Cashier/QueryTradeInfo/V2
+- /Cashier/QueryCreditCardPeriodInfo
 - /CreditDetail/DoAction
 - /Cashier/AioChargeback
 
 每個 API 有哪些參數建議直接參考歐付寶文件，注意幾點：
 
 - 使用時不用煩惱 `MerchantID` 與 `CheckMacValue`，正如上述範例一樣。
-- `/Cashier/AioCheckOut` 回傳的內容是 HTML，這個請求應該是交給瀏覽器發送的，所以不應該寫出 `client.request '/Cashier/AioCheckOut'` 這樣的內容。
+- `/Cashier/AioCheckOut/V2` 回傳的內容是 HTML，這個請求應該是交給瀏覽器發送的，所以不應該寫出 `client.request '/Cashier/AioCheckOut/V2'` 這樣的內容。
 
 ## Allpay::Client
 
@@ -49,8 +49,8 @@ test_client.request '/Cashier/QueryTradeInfo',
 `request(path, **params)`                                    | `Net::HTTPResponse` | 發送 API 請求
 `make_mac(**params)`                                         | `String`            | 用於產生 `CheckMacValue`，單純做加密，`params` 需要完整包含到 `MerchantID`
 `verify_mac(**params)`                                       | `Boolean`           | 會於檢查收到的參數，其檢查碼是否正確，這用在歐付寶物的 `ReturnURL` 與 `PeriodReturnURL` 參數上。
-`query_trade_info(merchant_trade_number, platform = nil)`    | `Hash`              | `/Cashier/QueryTradeInfo` 的捷徑方法，將 `TimeStamp` 設定為當前時間
-`query_period_credit_card_trade_info(merchant_trade_number)` | `Hash`              | `/Cashier/QueryPeriodCreditCardTradeInfo` 的捷徑方法，將 `TimeStamp` 設定為當前時間
+`query_trade_info(merchant_trade_number, platform = nil)`    | `Hash`              | `/Cashier/QueryTradeInfo/V2` 的捷徑方法，將 `TimeStamp` 設定為當前時間
+`query_period_credit_card_trade_info(merchant_trade_number)` | `Hash`              | `/Cashier/QueryCreditCardPeriodInfo` 的捷徑方法，將 `TimeStamp` 設定為當前時間
 `generate_checkout_params`                                   | `Hash`              | 用於產生 `/Cashier/AioCheckOut` 表單需要的參數，`MerchantTradeDate`、`MerchantTradeNo`、`PaymentType`，可省略。
 
 ## 使用範例
