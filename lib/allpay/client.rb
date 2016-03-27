@@ -8,7 +8,9 @@ require 'allpay/core_ext/hash'
 module Allpay
   class Client
     PRODUCTION_API_HOST = 'https://payment.allpay.com.tw'.freeze
+    PRODUCTION_LOGISTIC_API_HOST = 'https://logistics.allpay.com.tw/Express/map'.freeze
     TEST_API_HOST = 'http://payment-stage.allpay.com.tw'.freeze
+    TEST_LOGISTIC_API_HOST = 'http://logistics-stage.allpay.com.tw'.freeze
     TEST_OPTIONS = {
       merchant_id: '2000132',
       hash_key: '5294y06JbISpM5x9',
@@ -34,6 +36,13 @@ module Allpay
       case @options[:mode]
       when :production then PRODUCTION_API_HOST
       when :test then TEST_API_HOST
+      end
+    end
+
+    def logistic_api_host
+      case @options[:mode]
+      when :production then PRODUCTION_LOGISTIC_API_HOST
+      when :test then TEST_LOGISTIC_API_HOST
       end
     end
 
